@@ -2,13 +2,15 @@ version: "3.8"
 
 services:
   backend:
-    build: ./backend
-    ports:
-      - "3001:3001"
+    build:
+      context: ./backend
+      dockerfile: docker/python/Dockerfile
     volumes:
-      - ./backend:/app
-    environment:
-      - DATABASE_URL=file:./dev.db
+      - ./backend/backend:/backend
+    command: python3 /backend/manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    tty: true
 
   frontend:
     build: ./frontend
